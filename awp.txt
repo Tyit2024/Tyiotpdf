@@ -1,0 +1,346 @@
+                                   AWP 
+
+1)Create a web application for user defined exception handling.
+
+Ans: 
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        try
+        {
+            // Code that may throw multiple types of exceptions
+            int[] numbers = { 1, 2, 3 };
+            Console.WriteLine("Enter an index: ");
+            int index = int.Parse(Console.ReadLine()); // Can throw FormatException
+            Console.WriteLine("Value at index: " + numbers[index]); // Can throw IndexOutOfRangeException
+        }
+        catch (FormatException ex)
+        {
+            // Handle incorrect input format
+            Console.WriteLine("Error: Invalid number format!");
+        }
+        catch (IndexOutOfRangeException ex)
+        {
+            // Handle out-of-range index
+            Console.WriteLine("Error: Index out of range!");
+        }
+        finally
+        {
+            // Code that will always run
+            Console.WriteLine("Program execution completed.");
+        }
+    }
+}
+
+
+2)Create a simple application to demonstrate the concepts boxing and unboxing.	
+
+Ans: 
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Boxing: Converting a value type (int) to an object type
+        int num = 10;
+        object obj = num; // Boxing
+
+        // Unboxing: Converting the object type back to a value type (int)
+        int unboxedNum = (int)obj; // Unboxing
+
+        // Output
+        Console.WriteLine("Original Value: " + num);
+        Console.WriteLine("Boxed Value: " + obj);
+        Console.WriteLine("Unboxed Value: " + unboxedNum);
+    }
+}
+
+
+3.	Write a program in C# to demonstrate multiple inheritance using
+interfaces.	
+
+Ans : 
+using System;
+
+namespace MultipleInheritanceExample
+{
+    // First interface
+    public interface IAnimal
+    {
+        void Eat();
+    }
+
+    // Second interface
+    public interface IMovable
+    {
+        void Move();
+    }
+
+    // Class that implements both interfaces
+    public class Dog : IAnimal, IMovable
+    {
+        public void Eat()
+        {
+            Console.WriteLine("The dog is eating.");
+        }
+
+        public void Move()
+        {
+            Console.WriteLine("The dog is running.");
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Dog myDog = new Dog();
+            myDog.Eat();  // Calling method from IAnimal
+            myDog.Move(); // Calling method from IMovable
+
+            Console.ReadLine();
+        }
+    }
+}
+
+4)Write an Application to:
+1.	Generate Fibonacci series
+2.	Test for prime numbers
+
+Ans:
+ using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Fibonacci Series:");
+        GenerateFibonacci(10);
+
+        Console.WriteLine("\nPrime Number Test:");
+        for (int i = 1; i <= 20; i++)
+            Console.WriteLine($"{i} is {(IsPrime(i) ? "" : "not ")}a prime number.");
+    }
+
+    static void GenerateFibonacci(int count)
+    {
+        int a = 0, b = 1;
+        for (int i = 0; i < count; i++)
+        {
+            Console.Write(a + " ");
+            (a, b) = (b, a + b); // Tuple deconstruction for swapping
+        }
+    }
+
+    static bool IsPrime(int number)
+    {
+        if (number < 2) return false;
+        for (int i = 2; i * i <= number; i++)
+            if (number % i == 0) return false;
+        return true;
+    }
+}
+
+5.Create a simple web page to count the number of times the current
+webpage is submitted to the server onclick event of a Button
+
+Ans 
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Counter.aspx.cs" Inherits="Counter" %>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Page Submission Counter</title>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <h2>Page Submission Counter</h2>
+            <asp:Label ID="lblCount" runat="server" Text="Number of submissions: 0"></asp:Label>
+            <br />
+            <asp:Button ID="btnSubmit" runat="server" Text="Submit" OnClick="btnSubmit_Click" />
+        </div>
+    </form>
+</body>
+</html>
+using System;
+
+public partial class Counter : System.Web.UI.Page
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (Session["SubmitCount"] == null)
+        {
+            Session["SubmitCount"] = 0; // Initialize count if it doesn't exist
+        }
+        
+        // Display the current count
+        lblCount.Text = "Number of submissions: " + Session["SubmitCount"].ToString();
+    }
+
+    protected void btnSubmit_Click(object sender, EventArgs e)
+    {
+        // Increment the count
+        Session["SubmitCount"] = (int)Session["SubmitCount"] + 1;
+
+        // Refresh the label text to show the updated count
+        lblCount.Text = "Number of submissions: " + Session["SubmitCount"].ToString();
+    }
+}
+
+6.Create simple application to perform following operations
+i.	Finding factorial Value
+ii.	Money Conversion
+iii.	Cube of given number
+iv.	Generate Fibonacci
+
+Ans : 
+using System;
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Select an operation:");
+        Console.WriteLine("1. Factorial");
+        Console.WriteLine("2. Money Conversion (USD to EUR)");
+        Console.WriteLine("3. Cube of a number");
+        Console.WriteLine("4. Generate Fibonacci series");
+        Console.Write("Enter your choice (1-4): ");
+        int choice = int.Parse(Console.ReadLine());
+
+        switch (choice)
+        {
+            case 1:
+                Console.Write("Enter a number to find its factorial: ");
+                int numFactorial = int.Parse(Console.ReadLine());
+                Console.WriteLine($"Factorial of {numFactorial} is {Factorial(numFactorial)}");
+                break;
+
+            case 2:
+                Console.Write("Enter amount in USD: ");
+                double usd = double.Parse(Console.ReadLine());
+                Console.WriteLine($"{usd} USD is equal to {MoneyConversion(usd)} EUR");
+                break;
+
+            case 3:
+                Console.Write("Enter a number to find its cube: ");
+                int numCube = int.Parse(Console.ReadLine());
+                Console.WriteLine($"Cube of {numCube} is {Cube(numCube)}");
+                break;
+
+            case 4:
+                Console.Write("Enter the number of Fibonacci terms: ");
+                int count = int.Parse(Console.ReadLine());
+                Console.WriteLine("Fibonacci Series:");
+                GenerateFibonacci(count);
+                break;
+
+            default:
+                Console.WriteLine("Invalid choice.");
+                break;
+        }
+    }
+
+    // Method to find factorial
+    static long Factorial(int n)
+    {
+        if (n == 0 || n == 1) return 1;
+        return n * Factorial(n - 1);
+    }
+
+    // Method for money conversion (USD to EUR)
+    static double MoneyConversion(double usd)
+    {
+        const double conversionRate = 0.85; // Example conversion rate
+        return usd * conversionRate;
+    }
+
+    // Method to find cube of a number
+    static int Cube(int n)
+    {
+        return n * n * n;
+    }
+
+    // Method to generate Fibonacci series
+    static void GenerateFibonacci(int count)
+    {
+        int a = 0, b = 1, c;
+        for (int i = 0; i < count; i++)
+        {
+            Console.Write(a + " ");
+            c = a + b;
+            a = b;
+            b = c;
+        }
+        Console.WriteLine(); // For a new line after series
+    }
+}
+
+ 6)create a web page containing the student details (RollNo, Name, Class, Phone, Email) and show result using GridView Controls
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="StudentDetails.aspx.cs" Inherits="StudentDetails" %>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Student Details</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <h2>Student Details</h2>
+            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False">
+                <Columns>
+                    <asp:BoundField DataField="RollNo" HeaderText="Roll No" />
+                    <asp:BoundField DataField="Name" HeaderText="Name" />
+                    <asp:BoundField DataField="Class" HeaderText="Class" />
+                    <asp:BoundField DataField="Phone" HeaderText="Phone" />
+                    <asp:BoundField DataField="Email" HeaderText="Email" />
+                </Columns>
+            </asp:GridView>
+        </div>
+    </form>
+</body>
+</html>
+using System;
+using System.Data;
+
+public partial class StudentDetails : System.Web.UI.Page
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+            // Create a DataTable to hold student details
+            DataTable dt = new DataTable();
+            dt.Columns.Add("RollNo");
+            dt.Columns.Add("Name");
+            dt.Columns.Add("Class");
+            dt.Columns.Add("Phone");
+            dt.Columns.Add("Email");
+
+            // Adding sample data
+            dt.Rows.Add("101", "John Doe", "10", "123-456-7890", "john@example.com");
+            dt.Rows.Add("102", "Jane Smith", "10", "098-765-4321", "jane@example.com");
+            dt.Rows.Add("103", "Sam Brown", "9", "567-890-1234", "sam@example.com");
+
+            // Bind the DataTable to the GridView
+            GridView1.DataSource = dt;
+            GridView1.DataBind();
+        }
+    }
+}
